@@ -2,13 +2,10 @@ package com.atm;
 
 public interface AtmHiding {
 
-	public void createAccount();
-	public void depositMoney();
-	public void withdrawAmount();
-	public void checkBalance();
-	public void updateAccount();
-	public void displayDetails();
-	public void transferAmount();
-	public void transactionHistory();
+	public void depositMoney(String account_number);
+	public void withdrawAmount(String account_number);
+	public void checkBalance(String account_number);
+	public void transferAmount(String account_number);
+	public void transactionHistory(String account_number);
 	
 }
