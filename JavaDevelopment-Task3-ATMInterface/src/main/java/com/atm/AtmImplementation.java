@@ -131,6 +131,11 @@ public class AtmImplementation implements AtmHiding
 
 		    System.out.println("Enter amount");
 		    double amount = scanner.nextDouble();
+		    if(amount <= 0)
+		    {
+		        System.out.println("Enter a valid amount.");
+		        return;
+		    }
 
 		    System.out.println("Enter receiver account number");
 		    String receiverAccount = scanner.next();
@@ -191,6 +196,7 @@ public class AtmImplementation implements AtmHiding
 
 		    } catch (SQLException e) {
 		        e.printStackTrace();
+		       
 		    }
 		}
 		
