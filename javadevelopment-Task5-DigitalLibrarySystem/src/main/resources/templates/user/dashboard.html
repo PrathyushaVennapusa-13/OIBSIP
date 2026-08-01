@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>User Dashboard</title>
+
+<link rel="stylesheet" th:href="@{/css/user.css}">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+
+<body>
+
+
+<div class="dashboard">
+
+
+<!-- Sidebar -->
+
+<aside class="sidebar">
+
+
+<h2>📚 My Library</h2>
+
+
+<ul>
+
+
+<li>
+
+<a class="active" th:href="@{/user/dashboard}">
+
+🏠 Dashboard
+
+</a>
+
+</li>
+
+
+
+<li>
+
+<a th:href="@{/user/books}">
+
+📚 Browse Books
+
+</a>
+
+</li>
+
+
+
+
+<li>
+
+<a th:href="@{'/borrow/user/' + ${user.userId}}">
+
+📖 My Borrowed Books
+
+</a>
+
+</li>
+
+
+
+
+<li>
+
+<a th:href="@{'/reservation/user/' + ${user.userId}}">
+
+📌 My Reservations
+
+</a>
+
+</li>
+
+
+
+
+<li>
+
+<a th:href="@{'/user/profile/' + ${user.userId}}">
+
+👤 My Profile
+
+</a>
+
+</li>
+
+
+
+
+<li>
+
+	<a th:href="@{/contact}">
+	📩 Contact Library
+	</a>
+
+</li>
+
+
+
+
+<li>
+
+<a th:href="@{/user/logout}">
+
+🚪 Logout
+
+</a>
+
+</li>
+
+
+</ul>
+
+
+</aside>
+
+
+
+
+
+<!-- Main Content -->
+
+
+<main class="content">
+
+
+<h1>
+
+Welcome,
+
+<span th:text="${user.userName}"></span>
+
+👋
+
+</h1>
+
+
+
+<p>
+
+Welcome to Digital Library Management System.
+
+</p>
+
+
+
+
+<div class="cards">
+
+
+
+
+
+<div class="card">
+
+<h2>📚</h2>
+
+<h3>
+Browse Books
+</h3>
+
+
+<a th:href="@{/user/books}">
+
+Open
+
+</a>
+
+</div>
+
+
+
+
+
+
+<div class="card">
+
+<h2>📖</h2>
+
+<h3>
+My Borrowed Books
+</h3>
+
+
+<a th:href="@{'/borrow/user/' + ${user.userId}}">
+
+View
+
+</a>
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>📌</h2>
+
+<h3>
+My Reservations
+</h3>
+
+
+<a th:href="@{'/reservation/user/' + ${user.userId}}">
+
+View
+
+</a>
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>👤</h2>
+
+<h3>
+My Profile
+</h3>
+
+
+<a th:href="@{'/user/profile/' + ${user.userId}}">
+
+Profile
+
+</a>
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>📩</h2>
+
+<h3>
+Contact Library
+</h3>
+
+
+<a th:href="@{/contact}">
+Send Message
+</a>
+
+</div>
+
+
+
+
+</div>
+
+
+
+</main>
+
+
+</div>
+
+
+</body>
+
+
+</html>

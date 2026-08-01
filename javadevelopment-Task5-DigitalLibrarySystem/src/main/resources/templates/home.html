@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Digital Library Management System</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        📚 Digital Library
+
+    </div>
+
+    <ul class="nav-links">
+
+        <li><a th:href="@{/home}">Home</a></li>
+
+        <li><a th:href="@{/login}">Login</a></li>
+
+        <li><a th:href="@{/user/register}">Register</a></li>
+
+        <li><a th:href="@{/contact}">Contact</a></li>
+
+    </ul>
+
+</nav>
+
+<!-- ================= HERO SECTION ================= -->
+
+<section class="hero">
+
+    <div class="hero-left">
+
+        <h1>
+            Welcome to the
+            <span>Digital Library</span>
+        </h1>
+
+        <p>
+
+            Discover thousands of books,
+            manage borrowing,
+            reserve books online,
+            and enjoy a smarter reading experience.
+
+        </p>
+
+        <div class="hero-buttons">
+
+            <a th:href="@{/login}">
+                <button class="primary-btn">Login</button>
+            </a>
+
+            <a th:href="@{/user/register}">
+                <button class="secondary-btn">Register</button>
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="hero-right">
+
+        <div class="hero-card">
+
+            <h2>📖 Library Statistics</h2>
+
+            <div class="stat">
+
+                <h3>10,000+</h3>
+
+                <p>Books</p>
+
+            </div>
+
+            <div class="stat">
+
+                <h3>5,000+</h3>
+
+                <p>Readers</p>
+
+            </div>
+
+            <div class="stat">
+
+                <h3>24/7</h3>
+
+                <p>Access</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= FEATURES ================= -->
+
+<section class="features">
+
+    <h2>Our Features</h2>
+
+    <div class="feature-container">
+
+        <div class="feature-card">
+
+            <div class="icon">📚</div>
+
+            <h3>Book Management</h3>
+
+            <p>
+
+                Add, update and manage books easily.
+
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <div class="icon">👨‍🎓</div>
+
+            <h3>User Management</h3>
+
+            <p>
+
+                Register users and manage their profiles.
+
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <div class="icon">🔄</div>
+
+            <h3>Borrow & Return</h3>
+
+            <p>
+
+                Easy issue and return of library books.
+
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <div class="icon">📅</div>
+
+            <h3>Reservations</h3>
+
+            <p>
+
+                Reserve books anytime from anywhere.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= ABOUT ================= -->
+
+<section class="about">
+
+    <h2>About Our Library</h2>
+
+    <p>
+
+        Our Digital Library Management System provides an efficient
+        way to manage books, users, borrow records and reservations.
+        Built using Spring Boot, Thymeleaf and PostgreSQL,
+        it offers a secure and user-friendly experience.
+
+    </p>
+
+</section>
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <h3>Digital Library Management System</h3>
+
+    <p>
+
+        Read • Learn • Grow
+
+    </p>
+
+    <p>
+
+        © 2026 All Rights Reserved.
+
+    </p>
+
+</footer>
+
+</body>
+
+</html>

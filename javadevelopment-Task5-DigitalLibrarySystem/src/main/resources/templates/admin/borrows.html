@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Issued Books</title>
+
+<link rel="stylesheet" th:href="@{/css/admin.css}">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+
+    <aside class="sidebar">
+
+        <h2>📚 Library</h2>
+
+        <ul>
+
+            <li>
+                <a th:href="@{/admin/dashboard}">
+                    🏠 Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/book/all}">
+                    📖 Books
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/book/add}">
+                    ➕ Add Book
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/admin/users}">
+                    👥 Users
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/reservation/pending}">
+                    📌 Borrow Requests
+                </a>
+            </li>
+
+            <li>
+                <a class="active"
+                   th:href="@{/borrow/all}">
+                    📚 Issued Books
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/contact/all}">
+                    📩 Contact Messages
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/home}">
+                    🚪 Logout
+                </a>
+            </li>
+
+        </ul>
+
+    </aside>
+
+    <!-- Main Content -->
+
+    <main class="content">
+
+        <h1>📚 Issued Books</h1>
+
+        <p>
+            View all issued books and approve return requests.
+        </p>
+
+        <table>
+
+            <thead>
+
+            <tr>
+
+                <th>Borrow ID</th>
+
+                <th>User ID</th>
+
+                <th>Book ID</th>
+
+                <th>Issue Date</th>
+
+                <th>Due Date</th>
+
+                <th>Return Date</th>
+
+                <th>Status</th>
+
+                <th>Fine (₹)</th>
+
+                <th>Action</th>
+
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <tr th:each="borrow : ${borrows}">
+
+                <td th:text="${borrow.borrowId}"></td>
+
+                <td th:text="${borrow.userId}"></td>
+
+                <td th:text="${borrow.bookId}"></td>
+
+                <td th:text="${borrow.issueDate}"></td>
+
+                <td th:text="${borrow.dueDate}"></td>
+
+                <td th:text="${borrow.returnDate} ?: '-'"></td>
+
+                <!-- Status -->
+
+                <td>
+
+                    <span th:if="${borrow.status.name()=='ISSUED'}"
+                          style="color:green;font-weight:bold;">
+                        ISSUED
+                    </span>
+
+                    <span th:if="${borrow.status.name()=='RETURN_REQUESTED'}"
+                          style="color:orange;font-weight:bold;">
+                        RETURN REQUESTED
+                    </span>
+
+                    <span th:if="${borrow.status.name()=='RETURNED'}"
+                          style="color:blue;font-weight:bold;">
+                        RETURNED
+                    </span>
+
+                </td>
+
+                <td th:text="${borrow.fineAmount}"></td>
+
+                <!-- Action -->
+
+                <td>
+
+                    <!-- User still has the book -->
+
+                    <span th:if="${borrow.status.name()=='ISSUED'}">
+
+                        📖 Book With User
+
+                    </span>
+
+                    <!-- Approve return -->
+
+                    <form th:if="${borrow.status.name()=='RETURN_REQUESTED'}"
+                          th:action="@{'/borrow/approveReturn/' + ${borrow.borrowId}}"
+                          method="post">
+
+                        <button class="save-btn"
+                                type="submit">
+
+                            ✅ Approve Return
+
+                        </button>
+
+                    </form>
+
+                    <!-- Already returned -->
+
+                    <span th:if="${borrow.status.name()=='RETURNED'}">
+
+                        ✔ Returned Successfully
+
+                    </span>
+
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

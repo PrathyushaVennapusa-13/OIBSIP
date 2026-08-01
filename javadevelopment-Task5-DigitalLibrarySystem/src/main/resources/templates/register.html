@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>User Registration</title>
+
+    <link rel="stylesheet" th:href="@{/css/register.css}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Left Section -->
+
+    <div class="left-panel">
+
+        <h1>📚 Digital Library</h1>
+
+        <h2>Create Your Account</h2>
+
+        <p>
+
+            Join our Digital Library and explore thousands
+            of books, manage borrow records,
+            reserve books and enjoy a modern reading experience.
+
+        </p>
+
+    </div>
+
+    <!-- Right Section -->
+
+    <div class="right-panel">
+
+        <div class="register-box">
+
+            <h2>User Registration</h2>
+
+            <form
+                    th:action="@{/user/register}"
+                    th:object="${user}"
+                    method="post">
+
+                <div class="input-group">
+
+                    <label>Full Name</label>
+
+                    <input
+                            type="text"
+                            th:field="*{userName}"
+                            placeholder="Enter your full name"
+                            required>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>Email</label>
+
+                    <input
+                            type="email"
+                            th:field="*{email}"
+                            placeholder="Enter your email"
+                            required>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>Phone Number</label>
+
+                    <input
+                            type="number"
+                            th:field="*{phoneNumber}"
+                            placeholder="Enter phone number"
+                            required>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>Password</label>
+
+                    <input
+                            type="password"
+                            th:field="*{password}"
+                            placeholder="Create password"
+                            required>
+
+                </div>
+
+                <button type="submit">
+
+                    Register
+
+                </button>
+
+            </form>
+
+            <p class="login-link">
+
+                Already have an account?
+
+                <a th:href="@{/login}">
+
+                    Login Here
+
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

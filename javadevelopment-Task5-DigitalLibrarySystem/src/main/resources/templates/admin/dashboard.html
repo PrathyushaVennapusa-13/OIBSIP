@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Dashboard</title>
+
+<link rel="stylesheet" th:href="@{/css/admin.css}">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+
+    <aside class="sidebar">
+
+        <h2>📚 Library</h2>
+
+        <ul>
+
+			<li>
+			<a class="active" th:href="@{/user/dashboard}">
+			🏠 Dashboard
+			</a>
+			</li>
+
+            <li>
+                <a th:href="@{/book/all}">
+                    📖 Books
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/book/add}">
+                    ➕ Add Book
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/admin/users}">
+                    👥 Users
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/reservation/pending}">
+                    📌 Borrow Requests
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/borrow/all}">
+                    📚 Issued Books
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/contact/all}">
+                    📩 Contact Messages
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/home}">
+                    🚪 Logout
+                </a>
+            </li>
+
+        </ul>
+
+    </aside>
+
+    <!-- Main Content -->
+
+    <main class="content">
+
+        <h1>Welcome Admin 👋</h1>
+
+        <p>
+            Manage books, users, borrow requests, issued books, return requests, and contact messages from one place.
+        </p>
+
+        <div class="cards">
+
+            <div class="card">
+
+                <h2>📖</h2>
+
+                <h3>Books</h3>
+
+                <a th:href="@{/book/all}">
+                    View Books
+                </a>
+
+            </div>
+
+            <div class="card">
+
+                <h2>➕</h2>
+
+                <h3>Add Book</h3>
+
+                <a th:href="@{/book/add}">
+                    Add New
+                </a>
+
+            </div>
+
+            <div class="card">
+
+                <h2>👥</h2>
+
+                <h3>Users</h3>
+
+                <a th:href="@{/admin/users}">
+                    View Users
+                </a>
+
+            </div>
+
+            <div class="card">
+
+                <h2>📌</h2>
+
+                <h3>Borrow Requests</h3>
+
+                <a th:href="@{/reservation/pending}">
+                    View Requests
+                </a>
+
+            </div>
+
+            <div class="card">
+
+                <h2>📚</h2>
+
+                <h3>Issued Books</h3>
+
+                <a th:href="@{/borrow/all}">
+                    View Issued Books
+                </a>
+
+            </div>
+
+            <div class="card">
+
+                <h2>📩</h2>
+
+                <h3>Contact Messages</h3>
+
+                <a th:href="@{/contact/all}">
+                    View Messages
+                </a>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

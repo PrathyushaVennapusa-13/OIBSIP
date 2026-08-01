@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Login</title>
+
+<link rel="stylesheet" th:href="@{/css/login.css}">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="left">
+
+        <h1>📚 Digital Library</h1>
+
+        <h2>Welcome Back</h2>
+
+        <p>
+
+            Login to access thousands of books,
+            borrow books,
+            reserve books and manage your profile.
+
+        </p>
+
+    </div>
+
+    <div class="right">
+
+        <div class="login-box">
+
+            <h2>Login</h2>
+
+            <form id="loginForm" method="post">
+
+                <div class="input-box">
+
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Email Address"
+                        required>
+
+                </div>
+
+                <div class="input-box">
+
+                    <input
+                        id="password"
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        required>
+
+                </div>
+
+                <div class="role">
+
+                    <label>
+
+                        <input
+                        type="radio"
+                        name="role"
+                        value="user"
+                        checked>
+
+                        User
+
+                    </label>
+
+                    <label>
+
+                        <input
+                        type="radio"
+                        name="role"
+                        value="admin">
+
+                        Admin
+
+                    </label>
+
+                </div>
+
+                <button type="submit">
+
+                    Login
+
+                </button>
+
+            </form>
+
+            <p class="register">
+
+                New User?
+
+                <a th:href="@{/user/register}">
+
+                    Register Here
+
+                </a>
+
+            </p>
+
+            <p>
+
+                <a th:href="@{/home}">
+
+                    ← Back to Home
+
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const form=document.getElementById("loginForm");
+
+form.addEventListener("submit",function(){
+
+const role=document.querySelector("input[name='role']:checked").value;
+
+if(role==="admin")
+{
+form.action="/admin/login";
+}
+else
+{
+form.action="/user/login";
+}
+
+});
+
+</script>
+
+</body>
+
+</html>

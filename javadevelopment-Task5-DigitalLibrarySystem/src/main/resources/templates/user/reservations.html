@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My Borrow Requests</title>
+
+<link rel="stylesheet" th:href="@{/css/user.css}">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="content">
+
+<a th:href="@{/user/dashboard}">
+⬅ Back to Dashboard
+</a>
+
+<h1>📌 My Borrow Requests</h1>
+
+<p>
+Track the status of your borrow requests.
+</p>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Request ID</th>
+
+<th>Book ID</th>
+
+<th>Request Date</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr th:each="reservation : ${reservations}">
+
+<td th:text="${reservation.reservationId}"></td>
+
+<td th:text="${reservation.bookId}"></td>
+
+<td th:text="${reservation.reservationDate}"></td>
+
+<td>
+
+<span class="status"
+   th:text="${reservation.status}"> </span>
+
+</td>
+
+<td>
+
+<!-- Cancel only while pending -->
+
+<form th:if="${reservation.status.name() == 'PENDING'}"
+      th:action="@{'/reservation/cancel/' + ${reservation.reservationId}}"
+      method="get">
+
+<button type="submit">
+
+Cancel Request
+
+</button>
+
+</form>
+
+<span th:if="${reservation.status.name() == 'APPROVED'}">
+
+✅ Approved
+
+</span>
+
+<span th:if="${reservation.status.name() == 'REJECTED'}">
+
+❌ Rejected
+
+</span>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</body>
+
+</html>

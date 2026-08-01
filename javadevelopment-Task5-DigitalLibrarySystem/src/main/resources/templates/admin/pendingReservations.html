@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Reservations</title>
+
+<link rel="stylesheet" th:href="@{/css/admin.css}">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+
+<body>
+
+
+<div class="dashboard">
+
+
+<!-- Sidebar -->
+
+<aside class="sidebar">
+
+
+<h2>📚 Library</h2>
+
+
+<ul>
+
+
+<li>
+<a th:href="@{/admin/dashboard}">
+🏠 Dashboard
+</a>
+</li>
+
+
+<li>
+<a th:href="@{/book/all}">
+📖 Books
+</a>
+</li>
+
+
+<li>
+<a th:href="@{/book/add}">
+➕ Add Book
+</a>
+</li>
+
+
+<li>
+<a th:href="@{/admin/users}">
+👥 Users
+</a>
+</li>
+
+
+<li>
+<a th:href="@{/borrow/all}">
+📋 Borrow Records
+</a>
+</li>
+
+
+<li>
+<a class="active" th:href="@{/reservation/all}">
+📌 Reservations
+</a>
+</li>
+
+
+<li>
+<a th:href="@{/contact/all}">
+📩 Contacts
+</a>
+</li>
+
+
+<li>
+<a th:href="@{/home}">
+🚪 Logout
+</a>
+</li>
+
+
+</ul>
+
+
+</aside>
+
+
+
+
+<!-- Main Content -->
+
+
+<main class="content">
+
+
+<h1>📌 Book Reservations</h1>
+
+
+<p>
+Approve or reject user borrow requests.
+</p>
+
+
+
+
+<table>
+
+
+<thead>
+
+
+<tr>
+
+<th>Reservation ID</th>
+
+<th>User ID</th>
+
+<th>Book ID</th>
+
+<th>Reservation Date</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+
+</thead>
+
+
+
+<tbody>
+
+
+
+<tr th:each="reservation : ${reservations}">
+
+
+
+<td th:text="${reservation.reservationId}"></td>
+
+
+<td th:text="${reservation.userId}"></td>
+
+
+<td th:text="${reservation.bookId}"></td>
+
+
+<td th:text="${reservation.reservationDate}"></td>
+
+
+
+<td>
+
+
+<span th:text="${reservation.status}"></span>
+
+
+</td>
+
+
+
+
+<td>
+
+
+
+<!-- APPROVE -->
+
+
+<form
+th:if="${reservation.status.name() == 'PENDING'}"
+th:action="@{'/reservation/approve/' + ${reservation.reservationId}}"
+method="post">
+
+
+<button class="save-btn">
+
+✅ Approve
+
+</button>
+
+
+</form>
+
+
+
+
+
+<!-- REJECT -->
+
+
+<form
+th:if="${reservation.status.name() == 'PENDING'}"
+th:action="@{'/reservation/reject/' + ${reservation.reservationId}}"
+method="post">
+
+
+<button class="delete-btn">
+
+❌ Reject
+
+</button>
+
+
+</form>
+
+
+
+
+
+<!-- AFTER APPROVAL -->
+
+
+<span th:if="${reservation.status.name() == 'APPROVED'}">
+
+✅ Approved
+
+</span>
+
+
+
+
+<!-- AFTER REJECTION -->
+
+
+<span th:if="${reservation.status.name() == 'REJECTED'}">
+
+❌ Rejected
+
+</span>
+
+
+
+
+</td>
+
+
+
+
+</tr>
+
+
+
+</tbody>
+
+
+</table>
+
+
+
+</main>
+
+
+
+</div>
+
+
+</body>
+
+
+</html>

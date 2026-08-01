@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Browse Books</title>
+
+<link rel="stylesheet" th:href="@{/css/user.css}">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="content">
+
+<h1>📚 Available Books</h1>
+
+<p>
+Browse available books and send a borrow request.
+</p>
+
+<a th:href="@{/user/dashboard}">
+⬅ Back to Dashboard
+</a>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Book ID</th>
+<th>Title</th>
+<th>Author</th>
+<th>Category</th>
+<th>ISBN</th>
+<th>Total Quantity</th>
+<th>Available Quantity</th>
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr th:each="book : ${books}">
+
+<td th:text="${book.bookId}"></td>
+
+<td th:text="${book.title}"></td>
+
+<td th:text="${book.author}"></td>
+
+<td th:text="${book.category}"></td>
+
+<td th:text="${book.isbn}"></td>
+
+<td th:text="${book.totalQuantity}"></td>
+
+<td th:text="${book.availableQuantity}"></td>
+
+<td>
+
+<div th:if="${book.availableQuantity > 0}">
+
+<form th:action="@{/reservation/request}" method="post">
+
+<input
+type="hidden"
+name="bookId"
+th:value="${book.bookId}">
+
+<input
+type="hidden"
+name="userId"
+th:value="${user.userId}">
+
+<button
+type="submit"
+class="save-btn">
+
+📚 Send Borrow Request
+
+</button>
+
+</form>
+
+</div>
+
+<div th:unless="${book.availableQuantity > 0}">
+
+<button
+class="save-btn"
+disabled>
+
+🚫 Out of Stock
+
+</button>
+
+</div>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</body>
+
+</html>

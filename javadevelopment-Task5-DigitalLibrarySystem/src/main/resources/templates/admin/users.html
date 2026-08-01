@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Users</title>
+
+<link rel="stylesheet" th:href="@{/css/admin.css}">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+
+    <aside class="sidebar">
+
+        <h2>📚 Library</h2>
+
+        <ul>
+
+            <li><a th:href="@{/admin/dashboard}">🏠 Dashboard</a></li>
+
+            <li><a th:href="@{/book/all}">📖 Books</a></li>
+
+            <li><a th:href="@{/book/add}">➕ Add Book</a></li>
+
+            <li><a class="active" th:href="@{/admin/users}">👥 Users</a></li>
+
+            <li><a th:href="@{/borrow/all}">📋 Borrow Records</a></li>
+
+            <li><a th:href="@{/contact/all}">📩 Contacts</a></li>
+
+            <li><a th:href="@{/home}">🚪 Logout</a></li>
+
+        </ul>
+
+    </aside>
+
+    <!-- Main Content -->
+
+    <main class="content">
+
+        <h1>Registered Users</h1>
+
+        <p>Manage all registered users in the Digital Library.</p>
+
+        <table>
+
+            <thead>
+
+            <tr>
+
+                <th>User ID</th>
+
+                <th>Name</th>
+
+                <th>Email</th>
+
+                <th>Phone Number</th>
+
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <tr th:each="user : ${users}">
+
+                <td th:text="${user.userId}"></td>
+
+                <td th:text="${user.userName}"></td>
+
+                <td th:text="${user.email}"></td>
+
+                <td th:text="${user.phoneNumber}"></td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

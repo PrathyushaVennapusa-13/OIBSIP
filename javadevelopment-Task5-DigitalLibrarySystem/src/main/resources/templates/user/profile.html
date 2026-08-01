@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My Profile</title>
+
+<link rel="stylesheet" th:href="@{/css/user.css}">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="content">
+
+<a th:href="@{/user/dashboard}">
+⬅ Back to Dashboard
+</a>
+
+<div class="form-card">
+
+<h1>👤 My Profile</h1>
+
+<p>
+View and update your profile information.
+</p>
+
+<!-- User ID -->
+
+<div class="form-group">
+
+<label>User ID</label>
+
+<input
+type="text"
+th:value="${user.userId}"
+readonly>
+
+</div>
+
+<hr>
+
+<!-- Name Update -->
+
+<form th:action="@{'/user/updateName/' + ${user.userId}}" method="post">
+
+<div class="form-group">
+
+<label>Full Name</label>
+
+<input
+type="text"
+name="userName"
+th:value="${user.userName}"
+required>
+
+</div>
+
+<button class="save-btn">
+
+Update Name
+
+</button>
+
+</form>
+
+<hr>
+
+<!-- Email Update -->
+
+<form th:action="@{'/user/updateEmail/' + ${user.userId}}" method="post">
+
+<div class="form-group">
+
+<label>Email</label>
+
+<input
+type="email"
+name="email"
+th:value="${user.email}"
+required>
+
+</div>
+
+<button class="save-btn">
+
+Update Email
+
+</button>
+
+</form>
+
+<hr>
+
+<!-- Phone Update -->
+
+<form th:action="@{'/user/updatePhone/' + ${user.userId}}" method="post">
+
+<div class="form-group">
+
+<label>Phone Number</label>
+
+<input
+type="number"
+name="phoneNumber"
+th:value="${user.phoneNumber}"
+required>
+
+</div>
+
+<button class="save-btn">
+
+Update Phone
+
+</button>
+
+</form>
+
+<hr>
+
+<!-- Password Update -->
+
+<form th:action="@{'/user/updatePassword/' + ${user.userId}}" method="post">
+
+<div class="form-group">
+
+<label>Password</label>
+
+<input
+type="password"
+name="password"
+placeholder="Enter New Password"
+required>
+
+</div>
+
+<button class="save-btn">
+
+Change Password
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

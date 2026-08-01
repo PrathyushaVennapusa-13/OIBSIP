@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Contact Messages</title>
+
+<link rel="stylesheet" th:href="@{/css/admin.css}">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+
+    <aside class="sidebar">
+
+        <h2>📚 Library</h2>
+
+        <ul>
+
+            <li>
+                <a th:href="@{/admin/dashboard}">
+                    🏠 Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/book/all}">
+                    📚 Books
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/book/add}">
+                    ➕ Add Book
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/admin/users}">
+                    👥 Users
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/reservation/pending}">
+                    📌 Borrow Requests
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/borrow/all}">
+                    📚 Issued Books
+                </a>
+            </li>
+
+            <li>
+                <a class="active"
+                   th:href="@{/contact/all}">
+                    📩 Contact Messages
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/home}">
+                    🚪 Logout
+                </a>
+            </li>
+
+        </ul>
+
+    </aside>
+
+    <!-- Main Content -->
+
+    <main class="content">
+
+        <h1>📩 Contact Messages</h1>
+
+        <p>
+            Messages submitted by library users.
+        </p>
+
+        <table>
+
+            <thead>
+
+            <tr>
+
+                <th>Contact ID</th>
+
+                <th>User ID</th>
+
+                <th>Subject</th>
+
+                <th>Message</th>
+
+                <th>Date</th>
+
+                <th>Action</th>
+
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <tr th:each="contact : ${contacts}">
+
+                <td th:text="${contact.contactId}"></td>
+
+                <td th:text="${contact.userId}"></td>
+
+                <td th:text="${contact.subject}"></td>
+
+                <td th:text="${contact.message}"></td>
+
+                <td th:text="${contact.createdDate}"></td>
+
+                <td>
+
+                    <a th:href="@{'/contact/delete/' + ${contact.contactId}}">
+
+                        <button class="delete-btn" type="button">
+                            Delete
+                        </button>
+
+                    </a>
+
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

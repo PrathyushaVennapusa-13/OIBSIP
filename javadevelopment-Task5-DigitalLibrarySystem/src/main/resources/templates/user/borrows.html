@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My Borrowed Books</title>
+
+<link rel="stylesheet" th:href="@{/css/user.css}">
+
+</head>
+
+<body>
+
+<div class="content">
+
+<h1>📖 My Borrowed Books</h1>
+
+<p>
+View your borrowed books and request a return when needed.
+</p>
+
+<a th:href="@{/user/dashboard}">
+⬅ Back to Dashboard
+</a>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Borrow ID</th>
+
+<th>Book ID</th>
+
+<th>Issue Date</th>
+
+<th>Due Date</th>
+
+<th>Return Date</th>
+
+<th>Status</th>
+
+<th>Fine</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr th:each="borrow : ${borrows}">
+
+<td th:text="${borrow.borrowId}"></td>
+
+<td th:text="${borrow.bookId}"></td>
+
+<td th:text="${borrow.issueDate}"></td>
+
+<td th:text="${borrow.dueDate}"></td>
+
+<td th:text="${borrow.returnDate}"></td>
+
+<td>
+
+<span th:text="${borrow.status}"></span>
+
+</td>
+
+<td th:text="${borrow.fineAmount}"></td>
+
+<td>
+
+<!-- User can request return only if book is issued -->
+
+<form th:if="${borrow.status.name() == 'ISSUED'}"
+      th:action="@{'/borrow/requestReturn/' + ${borrow.borrowId}}"
+      method="post">
+
+<button type="submit">
+
+Request Return
+
+</button>
+
+</form>
+
+<span th:if="${borrow.status.name() == 'RETURN_REQUESTED'}">
+
+Return Request Pending
+
+</span>
+
+<span th:if="${borrow.status.name() == 'RETURNED'}">
+
+Returned
+
+</span>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</body>
+
+</html>
