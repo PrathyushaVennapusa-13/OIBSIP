@@ -26,9 +26,7 @@ public class BorrowService implements IBorrowService {
 
 
 
-    public BorrowService(
-            BorrowRepository borrowRepository,
-            BookRepository bookRepository) {
+    public BorrowService(BorrowRepository borrowRepository,BookRepository bookRepository) {
 
         this.borrowRepository = borrowRepository;
         this.bookRepository = bookRepository;
@@ -36,325 +34,100 @@ public class BorrowService implements IBorrowService {
     }
 
 
-
-
-    // ===============================
-    // GET BORROW BY ID
-    // ===============================
-
     @Override
     public BorrowDto getBorrowById(Integer borrowId) {
-
-
-        Borrow borrow =
-                borrowRepository.findById(borrowId)
-                .orElseThrow(() ->
-                new BorrowNotFoundException(
-                        "Borrow Not Found"));
-
-
+        Borrow borrow = borrowRepository.findById(borrowId) .orElseThrow(() -> new BorrowNotFoundException("Borrow Not Found"));
         return convertToDto(borrow);
 
     }
 
-
-
-
-
-
-    // ===============================
-    // ADMIN VIEW ALL BORROWS
-    // ===============================
-
     @Override
     public List<BorrowDto> getAllBorrows() {
-
-
-        return convertList(
-                borrowRepository.findAll());
-
+        return convertList( borrowRepository.findAll());
     }
 
-
-
-
-
-
-    // ===============================
-    // USER VIEW BORROWS
-    // ===============================
 
     @Override
     public List<BorrowDto> getBorrowsByUser(Integer userId) {
-
-
-        return convertList(
-                borrowRepository
-                .findByUserUserId(userId));
-
+        return convertList(borrowRepository.findByUserUserId(userId));
     }
 
-
-
-
-
-
-    // ===============================
-    // USER REQUEST RETURN
-    // ===============================
 
     @Override
     public BorrowDto requestReturn(Integer borrowId) {
-
-
-        Borrow borrow =
-                borrowRepository.findById(borrowId)
-                .orElseThrow(() ->
-                new BorrowNotFoundException(
-                        "Borrow Not Found"));
-
-
-
-        if(borrow.getStatus()
-                != BorrowStatus.ISSUED) {
-
-
-            throw new RuntimeException(
-                    "Return request already submitted");
-
+        Borrow borrow =borrowRepository.findById(borrowId).orElseThrow(() -> new BorrowNotFoundException("Borrow Not Found"));
+        if(borrow.getStatus() != BorrowStatus.ISSUED) {
+            throw new RuntimeException("Return request already submitted");
         }
-
-
-
-        borrow.setStatus(
-                BorrowStatus.RETURN_REQUESTED);
-
-
-
-        return convertToDto(
-                borrowRepository.save(borrow));
+        borrow.setStatus(BorrowStatus.RETURN_REQUESTED);
+        return convertToDto(borrowRepository.save(borrow));
 
     }
-
-
-
-
-
-
-    // ===============================
-    // ADMIN APPROVE RETURN
-    // ===============================
 
     @Override
     public BorrowDto approveReturn(Integer borrowId) {
-
-
-        Borrow borrow =
-                borrowRepository.findById(borrowId)
-                .orElseThrow(() ->
-                new BorrowNotFoundException(
-                        "Borrow Not Found"));
-
-
-
-        if(borrow.getStatus()
-                != BorrowStatus.RETURN_REQUESTED){
-
-
-            throw new RuntimeException(
-                    "Return request not found");
-
+        Borrow borrow = borrowRepository.findById(borrowId).orElseThrow(() ->new BorrowNotFoundException("Borrow Not Found"));
+        if(borrow.getStatus()!= BorrowStatus.RETURN_REQUESTED){
+            throw new RuntimeException("Return request not found");
         }
 
-
-
-        LocalDate today =
-                LocalDate.now();
-
-
-
+        LocalDate today = LocalDate.now();
         borrow.setReturnDate(today);
-
-
-
-        double fine =
-                calculateFine(borrowId);
-
-
-
+        double fine =calculateFine(borrowId);
         borrow.setFineAmount(fine);
-
-
-
-        borrow.setStatus(
-                BorrowStatus.RETURNED);
-
-
-
-
-        Book book =
-                borrow.getBook();
-
-
-
-        book.setAvailableQuantity(
-                book.getAvailableQuantity()+1);
-
-
-
+        borrow.setStatus(BorrowStatus.RETURNED);
+        Book book =borrow.getBook();
+        book.setAvailableQuantity(book.getAvailableQuantity()+1);
         bookRepository.save(book);
-
-
-
-        return convertToDto(
-                borrowRepository.save(borrow));
+        return convertToDto(borrowRepository.save(borrow));
 
     }
 
 
-
-
-
-
-    // ===============================
-    // FINE CALCULATION
-    // ===============================
-
     @Override
     public double calculateFine(Integer borrowId) {
-
-
-        Borrow borrow =
-                borrowRepository.findById(borrowId)
-                .orElseThrow(() ->
-                new BorrowNotFoundException(
-                        "Borrow Not Found"));
-
-
-
-        if(borrow.getDueDate()==null ||
-                borrow.getReturnDate()==null){
-
-            return 0;
-
+        Borrow borrow =borrowRepository.findById(borrowId).orElseThrow(() ->new BorrowNotFoundException( "Borrow Not Found"));
+        if(borrow.getDueDate()==null || borrow.getReturnDate()==null){
+        return 0;
         }
 
-
-
-        if(borrow.getReturnDate()
-                .isAfter(borrow.getDueDate())){
-
-
-            long days =
-                    ChronoUnit.DAYS.between(
-                    borrow.getDueDate(),
-                    borrow.getReturnDate());
-
-
-
+        if(borrow.getReturnDate().isAfter(borrow.getDueDate())){
+            long days = ChronoUnit.DAYS.between( borrow.getDueDate(), borrow.getReturnDate());
             return days * 5;
-
         }
-
-
         return 0;
 
     }
 
 
 
-
-
-
-
-    // ===============================
-    // ENTITY TO DTO
-    // ===============================
-
- // ===============================
- // ENTITY TO DTO
- // ===============================
-
  private BorrowDto convertToDto(Borrow borrow){
-
-
      BorrowDto dto = new BorrowDto();
-
-
-     dto.setBorrowId(
-             borrow.getBorrowId());
-
-
-     dto.setIssueDate(
-             borrow.getIssueDate());
-
-
-     dto.setDueDate(
-             borrow.getDueDate());
-
-
-     dto.setReturnDate(
-             borrow.getReturnDate());
-
-
-     dto.setStatus(
-             borrow.getStatus());
-
-
-     dto.setFineAmount(
-             borrow.getFineAmount());
-
-
-
+     dto.setBorrowId(borrow.getBorrowId());
+     dto.setIssueDate(borrow.getIssueDate());
+     dto.setDueDate(borrow.getDueDate());
+     dto.setReturnDate(borrow.getReturnDate());
+     dto.setStatus(borrow.getStatus());
+     dto.setFineAmount(borrow.getFineAmount());
      if(borrow.getUser() != null){
-
-         dto.setUserId(
-                 borrow.getUser().getUserId());
-
+        dto.setUserId(borrow.getUser().getUserId());
      }
-
-
-
      if(borrow.getBook() != null){
-
-         dto.setBookId(
-                 borrow.getBook().getBookId());
-
-
-         dto.setBookTitle(
-                 borrow.getBook().getTitle());
-
+         dto.setBookId(borrow.getBook().getBookId());
+         dto.setBookTitle(borrow.getBook().getTitle());
      }
-
-
      return dto;
 
  }
 
+    private List<BorrowDto> convertList(List<Borrow> borrows){
 
 
-
-
-
-    private List<BorrowDto> convertList(
-            List<Borrow> borrows){
-
-
-        List<BorrowDto> list =
-                new ArrayList<>();
-
-
-
+        List<BorrowDto> list =new ArrayList<>();
         for(Borrow borrow:borrows){
-
-            list.add(convertToDto(borrow));
-
+        list.add(convertToDto(borrow));
         }
-
-
         return list;
 
     }
-
-
 }
