@@ -15,186 +15,57 @@ import com.lms.exception.InvalidPasswordException;
 import com.lms.repository.AdminRepository;
 import com.lms.repository.UserRepository;
 
-
 @Service
 public class AdminService implements IAdminService {
-
-
+    
     private final AdminRepository adminRepository;
     private final UserRepository userRepository;
-
-
 
     public AdminService(
             AdminRepository adminRepository,
             UserRepository userRepository) {
-
-
         this.adminRepository = adminRepository;
         this.userRepository = userRepository;
 
     }
-
-
-
-
-
-
-
-    // ===============================
-    // ADMIN LOGIN
-    // ===============================
-
     @Override
-    public AdminDto adminLogin(
-            String email,
-            String password) {
-
-
-
-        Admin admin =
-                adminRepository.findByEmail(email)
-                .orElseThrow(() ->
-                new AdminNotFoundException(
-                        "Admin Not Found"));
-
-
-
-        if(!admin.getPassword()
-                .equals(password)){
-
-
-            throw new InvalidPasswordException(
-                    "Invalid Password");
-
+    public AdminDto adminLogin( String email, String password) {
+        Admin admin =adminRepository.findByEmail(email) .orElseThrow(() -> new AdminNotFoundException(  "Admin Not Found"));
+        if(!admin.getPassword() .equals(password)){
+            throw new InvalidPasswordException("Invalid Password");
         }
-
-
-
         return convertToDto(admin);
-
     }
-
-
-
-
-
-
-
-
-    // ===============================
-    // GET ALL USERS
-    // ===============================
-
     @Override
     public List<UserDto> getAllUsers() {
 
-
-        List<User> users =
-                userRepository.findAll();
-
-
-
-        List<UserDto> list =
-                new ArrayList<>();
-
-
-
+        List<User> users = userRepository.findAll();
+        List<UserDto> list = new ArrayList<>();
         for(User user:users){
-
-
-            list.add(
-                    convertUserToDto(user));
-
+            list.add(convertUserToDto(user));
         }
-
-
-
         return list;
 
     }
 
-
-
-
-
-
-
-
-    // ===============================
-    // ADMIN ENTITY TO DTO
-    // ===============================
-
-    private AdminDto convertToDto(
-            Admin admin){
-
-
-        AdminDto dto =
-                new AdminDto();
-
-
-        dto.setAdminId(
-                admin.getAdminId());
-
-
-        dto.setAdminName(
-                admin.getAdminName());
-
-
-        dto.setEmail(
-                admin.getEmail());
-
-
-        dto.setPassword(
-                admin.getPassword());
-
-
-
+    private AdminDto convertToDto( Admin admin){
+        AdminDto dto = new AdminDto();
+        dto.setAdminId(admin.getAdminId());
+        dto.setAdminName(admin.getAdminName());
+        dto.setEmail(admin.getEmail());
+        dto.setPassword(admin.getPassword());
         return dto;
 
     }
 
 
-
-
-
-
-
-
-    // ===============================
-    // USER ENTITY TO DTO
-    // ===============================
-
-    private UserDto convertUserToDto(
-            User user){
-
-
-        UserDto dto =
-                new UserDto();
-
-
-
-        dto.setUserId(
-                user.getUserId());
-
-
-        dto.setUserName(
-                user.getUserName());
-
-
-        dto.setEmail(
-                user.getEmail());
-
-
-        dto.setPassword(
-                user.getPassword());
-
-
-        dto.setPhoneNumber(
-                user.getPhoneNumber());
-
-
-
+    private UserDto convertUserToDto(User user){
+        UserDto dto = new UserDto();
+        dto.setUserId(user.getUserId());
+        dto.setUserName(user.getUserName());
+        dto.setEmail(user.getEmail());
+        dto.setPassword(user.getPassword());
+        dto.setPhoneNumber(user.getPhoneNumber());
         return dto;
 
     }
