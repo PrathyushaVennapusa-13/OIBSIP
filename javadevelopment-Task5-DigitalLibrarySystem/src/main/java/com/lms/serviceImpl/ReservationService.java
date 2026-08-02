@@ -53,40 +53,30 @@ public class ReservationService implements IReservationService {
     public ReservationDto reserveBook(Integer userId, Integer bookId) {
 
 
-        User user = userRepository.findById(userId)
-                .orElseThrow(() ->
-                new UserNotFoundException("User Not Found"));
+        User user = userRepository.findById(userId).orElseThrow(() ->new UserNotFoundException("User Not Found"));
 
 
-        Book book = bookRepository.findById(bookId)
-                .orElseThrow(() ->
-                new BookNotFoundException("Book Not Found"));
+        Book book = bookRepository.findById(bookId).orElseThrow(() -> new BookNotFoundException("Book Not Found"));
 
 
 
         if(book.getAvailableQuantity() <= 0) {
-
-            throw new BookAvailableException(
-                    "Book is not available");
+            throw new BookAvailableException("Book is not available");
         }
 
 
 
-        List<Reservation> list =
-                reservationRepository.findByUserUserId(userId);
+        List<Reservation> list = reservationRepository.findByUserUserId(userId);
 
 
 
         for(Reservation r : list) {
 
 
-            if(r.getBook().getBookId().equals(bookId)
-                    &&
-               r.getStatus()==ReservationStatus.PENDING) {
+            if(r.getBook().getBookId().equals(bookId) && r.getStatus()==ReservationStatus.PENDING) {
 
 
-                throw new RuntimeException(
-                        "Request already exists");
+                throw new RuntimeException("Request already exists");
             }
         }
 
@@ -101,8 +91,7 @@ public class ReservationService implements IReservationService {
 
 
 
-        Reservation saved =
-                reservationRepository.save(reservation);
+        Reservation saved =reservationRepository.save(reservation);
 
 
         return convertToDto(saved);
@@ -110,27 +99,18 @@ public class ReservationService implements IReservationService {
     }
 
 
-
-
-
-
     @Override
     @Transactional
     public ReservationDto approveReservation(Integer reservationId) {
 
 
-        Reservation reservation =
-                reservationRepository.findById(reservationId)
-                .orElseThrow(() ->
-                new ReservationNotFoundException(
-                        "Reservation Not Found"));
+        Reservation reservation = reservationRepository.findById(reservationId) .orElseThrow(() -> new ReservationNotFoundException("Reservation Not Found"));
 
 
 
         if(reservation.getStatus()!=ReservationStatus.PENDING){
 
-            throw new RuntimeException(
-                    "Already processed");
+            throw new RuntimeException("Already processed");
 
         }
 
@@ -142,8 +122,7 @@ public class ReservationService implements IReservationService {
 
         if(book.getAvailableQuantity()<=0){
 
-            throw new BookAvailableException(
-                    "Book unavailable");
+            throw new BookAvailableException("Book unavailable");
 
         }
 
@@ -158,8 +137,7 @@ public class ReservationService implements IReservationService {
 
         borrow.setIssueDate(LocalDate.now());
 
-        borrow.setDueDate(
-                LocalDate.now().plusDays(15));
+        borrow.setDueDate(LocalDate.now().plusDays(15));
 
         borrow.setStatus(BorrowStatus.ISSUED);
 
@@ -171,53 +149,24 @@ public class ReservationService implements IReservationService {
 
 
 
-        book.setAvailableQuantity(
-                book.getAvailableQuantity()-1);
+        book.setAvailableQuantity(book.getAvailableQuantity()-1);
 
 
         bookRepository.save(book);
-
-
-
-        reservation.setStatus(
-                ReservationStatus.APPROVED);
-
-
-
-        Reservation updated =
-                reservationRepository.save(reservation);
-
-
-
+        reservation.setStatus(ReservationStatus.APPROVED);
+        Reservation updated =reservationRepository.save(reservation);
         return convertToDto(updated);
 
     }
-
-
-
-
-
 
 
     @Override
     public ReservationDto rejectReservation(Integer reservationId) {
 
 
-        Reservation reservation =
-                reservationRepository.findById(reservationId)
-                .orElseThrow(() ->
-                new ReservationNotFoundException(
-                        "Reservation Not Found"));
-
-
-
-        reservation.setStatus(
-                ReservationStatus.REJECTED);
-
-
-
-        return convertToDto(
-                reservationRepository.save(reservation));
+        Reservation reservation =reservationRepository.findById(reservationId) .orElseThrow(() -> new ReservationNotFoundException("Reservation Not Found"));
+        reservation.setStatus( ReservationStatus.REJECTED);
+        return convertToDto(reservationRepository.save(reservation));
 
     }
 
@@ -231,9 +180,7 @@ public class ReservationService implements IReservationService {
     public List<ReservationDto> getPendingReservations() {
 
 
-        return convertList(
-                reservationRepository.findByStatus(
-                ReservationStatus.PENDING));
+        return convertList(reservationRepository.findByStatus( ReservationStatus.PENDING));
 
     }
 
@@ -246,8 +193,7 @@ public class ReservationService implements IReservationService {
     public List<ReservationDto> getAllReservations() {
 
 
-        return convertList(
-                reservationRepository.findAll());
+        return convertList(reservationRepository.findAll());
 
     }
 
@@ -260,9 +206,7 @@ public class ReservationService implements IReservationService {
     public List<ReservationDto> getReservationsByUser(Integer userId) {
 
 
-        return convertList(
-                reservationRepository
-                .findByUserUserId(userId));
+        return convertList( reservationRepository.findByUserUserId(userId));
 
     }
 
@@ -275,11 +219,7 @@ public class ReservationService implements IReservationService {
     public ReservationDto getReservationById(Integer reservationId) {
 
 
-        Reservation reservation =
-                reservationRepository.findById(reservationId)
-                .orElseThrow(() ->
-                new ReservationNotFoundException(
-                        "Reservation Not Found"));
+        Reservation reservation = reservationRepository.findById(reservationId) .orElseThrow(() -> new ReservationNotFoundException( "Reservation Not Found"));
 
 
         return convertToDto(reservation);
@@ -297,18 +237,13 @@ public class ReservationService implements IReservationService {
 
 
         Reservation reservation =
-                reservationRepository.findById(reservationId)
-                .orElseThrow(() ->
-                new ReservationNotFoundException(
-                        "Reservation Not Found"));
+                reservationRepository.findById(reservationId).orElseThrow(() ->new ReservationNotFoundException("Reservation Not Found"));
 
 
 
-        if(reservation.getStatus()
-                !=ReservationStatus.PENDING){
+        if(reservation.getStatus()!=ReservationStatus.PENDING){
 
-            throw new RuntimeException(
-                    "Only pending request can cancel");
+            throw new RuntimeException("Only pending request can cancel");
 
         }
 
@@ -323,33 +258,26 @@ public class ReservationService implements IReservationService {
 
 
 
-    private ReservationDto convertToDto(
-            Reservation reservation){
+    private ReservationDto convertToDto(Reservation reservation){
 
 
-        ReservationDto dto =
-                new ReservationDto();
+        ReservationDto dto =new ReservationDto();
 
 
-        dto.setReservationId(
-                reservation.getReservationId());
+        dto.setReservationId(reservation.getReservationId());
 
 
-        dto.setReservationDate(
-                reservation.getReservationDate());
+        dto.setReservationDate(reservation.getReservationDate());
 
 
-        dto.setStatus(
-                reservation.getStatus());
+        dto.setStatus(reservation.getStatus());
 
 
 
-        dto.setUserId(
-                reservation.getUser().getUserId());
+        dto.setUserId(reservation.getUser().getUserId());
 
 
-        dto.setBookId(
-                reservation.getBook().getBookId());
+        dto.setBookId(reservation.getBook().getBookId());
 
 
         return dto;
@@ -360,17 +288,13 @@ public class ReservationService implements IReservationService {
 
 
 
-    private List<ReservationDto> convertList(
-            List<Reservation> reservations){
+    private List<ReservationDto> convertList(List<Reservation> reservations){
 
 
-        List<ReservationDto> list =
-                new ArrayList<>();
+        List<ReservationDto> list =new ArrayList<>();
 
 
-        for(Reservation r:reservations){
-
-            list.add(convertToDto(r));
+        for(Reservation r:reservations){list.add(convertToDto(r));
 
         }
 
